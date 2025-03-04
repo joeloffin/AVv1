@@ -1,251 +1,55 @@
-:root {
-    --lime: #a1d6a0;
-    --dark-gray: #1a1a1a;
-    --lime-hover: #a1d6a0;
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all nav links
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    // Hide all content sections except home initially
+    const contentSections = document.querySelectorAll('.content > div');
+    contentSections.forEach(section => {
+        if (!section.classList.contains('home-content')) {
+            section.style.display = 'none';
+        }
+    });
+
+    // Add click event to each nav link
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Hide all sections
+            contentSections.forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show the clicked section
+            const sectionToShow = document.querySelector(`.${this.getAttribute('href').substring(1)}-content`);
+            if (sectionToShow) {
+                sectionToShow.style.display = 'block';
+            }
+        });
+    });
+});
+
+function showContactForm() {
+    document.getElementById('contact-form').style.display = 'block';
+    document.querySelector('.contact-button').style.display = 'none';
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+function handleSubmit(event) {
+    event.preventDefault();
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('thank-you-message').style.display = 'block';
+    
+    // Optional: Reset form
+    event.target.reset();
 }
 
-body {
-    background-color: var(--dark-gray);
-    background-image: radial-gradient(#3a3a3a 1px, transparent 1px);
-    background-size: 30px 30px;
-    color: white;
-    font-family: 'Inter', 'Montserrat', 'Segoe UI', sans-serif;
-    min-height: 100vh;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem 2rem;
-    min-height: calc(100vh - 40px); /* Subtract banner height */
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 3rem;
-    align-items: center;
-    text-align: center;
-}
-
-h1 {
-    color: var(--lime);
-    font-size: 2.5rem;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 2rem;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-}
-
-nav a:hover, nav a.active {
-    background-color: var(--lime);
-    color: var(--dark-gray);
-}
-
-.card {
-    background-color: rgba(26, 26, 26, 0.9);
-    border: 2px solid var(--lime);
-    border-radius: 8px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-    color: var(--lime);
-    margin-bottom: 1rem;
-}
-
-p {
-    line-height: 1.6;
-}
-
-/* About Section Styles */
-.about-text {
-    margin-bottom: 2rem;
-    line-height: 1.8;
-    text-align: center;  /* Centers all text */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.about-text p {
-    margin-bottom: 1rem;
-}
-
-h3 {
-    color: var(--lime);
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-}
-
-.company-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.company-card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    padding: 1rem;
-    transition: transform 0.3s ease;
-}
-
-.company-card:hover {
-    transform: translateY(-5px);
-}
-
-.company-image {
-    aspect-ratio: 16/9;
-    overflow: hidden;
-    border-radius: 4px;
-}
-
-.company-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.contact-button {
-    background-color: #28a745;
-    color: white;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 20px auto;
-    display: block;
-    transition: background-color 0.3s;
-}
-
-
-#contact-form {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-#contact-form input,
-#contact-form textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-    margin-bottom: 10px;
-}
-
-#contact-form textarea {
-    min-height: 150px;
-    resize: vertical;
-}
-
-.submit-button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-}
-
-.submit-button:hover {
-    background-color: #218838;
-}
-
-.backer-container {
-    display: flex;
-    justify-content: space-between; /* Distributes the columns evenly */
-    align-items: center; /* Vertically centers the images */
-    flex-wrap: wrap; /* Optional: allows wrapping on smaller screens */
-  }
-  
-  .backer {
-    flex: 1; /* Each company takes up equal space */
-    text-align: center;
-    margin: 0 10px; /* Adjust spacing between columns as needed */
-  }
-  
-  .backer img {
-    max-width: 100%;
-    height: auto; /* Maintains aspect ratio */
-    display: block;
-    margin: 0 auto; /* Centers the image horizontally */
-  }
-  
-.backed-by-section .column p {
-    margin-top: 10px;
-    padding: 0 10px;
-    color: #666666 !important;  /* More specific selector and forcing the color */
-    text-align: center;
-}
-
-.backed-by-section h2 {
-    text-align: center;
-    color: #666666;
-    margin-bottom: 20px;
-}
-
-/* If needed, also add this as a backup */
-.row .column p {
-    color: #666666 !important;
-}
-
-.backed-by-section .backer p {
-    margin-top: 10px;
-    padding: 0 10px;
-    color: #666666 !important;
-    text-align: center;
-}
-
-.about-content {
-    background: transparent;
-    margin: 0;
-    padding: 0;
-    border: none;
-    box-shadow: none;
-    text-align: center;  /* Centers all text */
-    display: flex;
-    flex-direction: column;
-    align-items: center;  /* Centers content horizontally */
-}
-
-.about-content h2 {
-    margin-bottom: 10px;
-    color: var(--lime);
-}
-
-.about-content p {
-    max-width: 800px;  /* Optional: limits line length for better readability */
-    margin: 0 auto;    /* Centers the paragraph block */
-    color: #fefefe;
-}
-
-.content > div {
-    background: transparent;
-    margin: 0;
-    padding: 0;
-}
-  
+async function submitStory(event) {
+    event.preventDefault();
+    console.log('Form submitted');
+    
+    const form = document.getElementById('storyForm');
+    
+    // Show submission confirmation
+    alert('Thank you for submitting your story!');
+    form.reset();
+} 
